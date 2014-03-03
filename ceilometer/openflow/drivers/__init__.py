@@ -2,7 +2,7 @@
 import abc
 from stevedore import driver
 
-def get_driver(name, host, port, namespace='ceilometer.openflow.d'):
+def get_driver(name, host, port, namespace='ceilometer.openflow.driver'):
     """Get OpenFlow driver and load it.
 
     :param name: name of the driver.

@@ -108,30 +108,12 @@ class AgentManager(agent.AgentManager):
         self.ofDriver = drivers.get_driver(cfg.CONF.openflow.ofi_driver, 
                                             cfg.CONF.openflow.of_ctrl_host, 
                                             cfg.CONF.openflow.of_ctrl_port)
-        #self.ofDriver = driver.RyuNetworkDriver(cfg.CONF.openflow.of_ctrl_host, cfg.CONF.openflow.of_ctrl_port)
+        
     def create_polling_task(self):
         return PollingTask(self)
 
-#     def setup_notifier_task(self):
-#         """For nova notifier usage."""
-#         task = PollingTask(self)
-#         for pollster in self.pollster_manager.extensions:
-#             task.add(
-#                 pollster,
-#                 self.pipeline_manager.pipelines)
-#         self.notifier_task = task
-# 
-#     def poll_instance(self, context, instance):
-#         """Poll one instance."""
-#         self.notifier_task.poll_and_publish_instances([instance])
 
-#     @property
-#     def inspector(self):
-#         return self._inspector
-
-
-
-def agent_compute():
+def agent_openflow():
     service.prepare_service()
     os_service.launch(rpc_service.Service(cfg.CONF.host,
                                           'ceilometer.agent.openflow',

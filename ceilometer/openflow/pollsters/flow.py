@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2014, The SAVI Project.
+#
+# @author: Jieyu Lin <Jieyu.lin@savinetwork.ca>
+
 from ceilometer.openstack.common import log
 from ceilometer import sample
 from ceilometer.openstack.common import timeutils

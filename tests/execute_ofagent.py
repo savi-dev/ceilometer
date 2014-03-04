@@ -3,8 +3,8 @@
 
 import sys
 
-from ceilometer.openflow.manager import agent_compute
+from ceilometer.openflow.manager import agent_openflow
 
 
 if __name__ == "__main__":
-    sys.exit(agent_compute())
+    sys.exit(agent_openflow())

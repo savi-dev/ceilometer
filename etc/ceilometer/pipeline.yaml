@@ -22,3 +22,33 @@
                   scale: "100.0 / (10**9 * (resource_metadata.cpu_number or 1))"
     publishers:
         - rpc://
+-
+    name: of_port_rx_pipeline
+    interval: 10
+    meters:
+        - "openflow_port_rx_bytes"
+    transformers:
+        - name: "rate_of_change"
+          parameters:
+              target:
+                  name: "openflow_port_rx_bw"
+                  unit: "bytes/sec"
+                  type: "gauge"
+                  scale: "1"
+    publishers:
+        - rpc://
+-
+    name: of_port_tx_pipeline
+    interval: 10
+    meters:
+        - "openflow_port_tx_bytes"
+    transformers:
+        - name: "rate_of_change"
+          parameters:
+              target:
+                  name: "openflow_port_tx_bw"
+                  unit: "bytes/sec"
+                  type: "gauge"
+                  scale: "1"
+    publishers:
+        - rpc://

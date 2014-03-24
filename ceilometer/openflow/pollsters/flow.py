@@ -12,10 +12,10 @@ LOG = log.getLogger(__name__)
 
 FLOW_TYPE = 'flow'
 
-_FLOW_BYTE_COUNT = 'flow_byte_count'
-_FLOW_DURATION_SEC = 'flow_duration_second'
-_FLOW_DURATION_NSEC = 'flow_duration_nsec'
-_FLOW_PACKET_COUNT = 'flow_packet_count'
+_FLOW_BYTE_COUNT = 'openflow_flow_byte_count'
+_FLOW_DURATION_SEC = 'openflow_flow_duration_second'
+_FLOW_DURATION_NSEC = 'openflow_flow_duration_nsec'
+_FLOW_PACKET_COUNT = 'openflow_flow_packet_count'
 
 class FlowBase(object):
     """base class for port statistics"""

@@ -10,14 +10,14 @@ import abc
 
 LOG = log.getLogger(__name__)
 
-_PORT_REV_BYTE='port_rx_bytes'
-_PORT_SENT_BYTE='port_tx_bytes'
-_PORT_REV_PACKET='port_rx_packets'
-_PORT_SENT_PACKET='port_tx_packets'
-_PORT_RX_DROPPED='port_rx_dropped'
-_PORT_TX_DROPPED='port_tx_dropped'
-_PORT_RX_ERRORS='port_rx_errors'
-_PORT_TX_ERRORS='port_tx_errors'
+_PORT_REV_BYTE='openflow_port_rx_bytes'
+_PORT_SENT_BYTE='openflow_port_tx_bytes'
+_PORT_REV_PACKET='openflow_port_rx_packets'
+_PORT_SENT_PACKET='openflow_port_tx_packets'
+_PORT_RX_DROPPED='openflow_port_rx_dropped'
+_PORT_TX_DROPPED='openflow_port_tx_dropped'
+_PORT_RX_ERRORS='openflow_port_rx_errors'
+_PORT_TX_ERRORS='openflow_port_tx_errors'
 
 PORT_TYPE='port'
 

@@ -78,7 +78,7 @@ cfg.CONF.register_cli_opts(CLI_OPTIONS, group="service_credentials")
 
 
 def prepare_service(argv=None):
-    eventlet.monkey_patch()
+    eventlet.monkey_patch(thread=False)
     gettextutils.install('ceilometer', lazy=False)
     rpc.set_defaults(control_exchange='ceilometer')
     cfg.set_defaults(log.log_opts,

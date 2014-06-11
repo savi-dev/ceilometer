@@ -40,7 +40,9 @@ class flowByteCount (FlowBase):
         for flow_stat in stats:
             byte_count = flow_stat['byte_count']
             flow_id = flow_stat['cookie']
-
+            if flow_id == 0:
+                continue
+            
             name = _FLOW_BYTE_COUNT
             resource_id = switch+'_flow_'+str(flow_id)
             s = sample.Sample(
@@ -64,6 +66,8 @@ class flowPacketCount (FlowBase):
         for flow_stat in stats:
             byte_count = flow_stat['packet_count']
             flow_id = flow_stat['cookie']
+            if flow_id == 0:
+                continue
 
             name = _FLOW_PACKET_COUNT
             resource_id = switch+'_flow_'+str(flow_id)
@@ -88,6 +92,8 @@ class flowDurationSec (FlowBase):
         for flow_stat in stats:
             byte_count = flow_stat['duration_sec']
             flow_id = flow_stat['cookie']
+            if flow_id == 0:
+                continue
 
             name = _FLOW_DURATION_SEC
             resource_id = switch+'_flow_'+str(flow_id)
@@ -105,13 +111,15 @@ class flowDurationSec (FlowBase):
             
         return sample_list
     
-class flowDurationMsec (FlowBase):
+class flowDurationNsec (FlowBase):
     def get_samples(self, switch, stats):
         LOG.info('Getting flow duration nsec for switch with dpid %s', switch)
         sample_list = []
         for flow_stat in stats:
             byte_count = flow_stat['duration_nsec']
             flow_id = flow_stat['cookie']
+            if flow_id == 0:
+                continue
 
             name = _FLOW_DURATION_NSEC
             resource_id = switch+'_flow_'+str(flow_id)

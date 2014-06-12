@@ -24,12 +24,12 @@ class diskUsage (plugin.PhyServerPollster):
         name = _DISK_USAGE
         for dp in disk_partitions:
             partition_name = dp.device.split('/')[-1]
-            resource_id = resource_id + partition_name
+            curr_resource_id = resource_id + partition_name
             disk_usage = psutil.disk_usage(dp.mountpoint)
-            sample_list.append(make_sample(name+'_total', sample.TYPE_GAUGE, 'bytes', disk_usage.total, resource_id))
-            sample_list.append(make_sample(name+'_used', sample.TYPE_GAUGE, 'bytes', disk_usage.used, resource_id))
-            sample_list.append(make_sample(name+'_free', sample.TYPE_GAUGE, 'bytes', disk_usage.free, resource_id))
-            sample_list.append(make_sample(name+'_percent_used', sample.TYPE_GAUGE, 'bytes', disk_usage.percent, resource_id))
+            sample_list.append(make_sample(name+'_total', sample.TYPE_GAUGE, 'bytes', disk_usage.total, curr_resource_id))
+            sample_list.append(make_sample(name+'_used', sample.TYPE_GAUGE, 'bytes', disk_usage.used, curr_resource_id))
+            sample_list.append(make_sample(name+'_free', sample.TYPE_GAUGE, 'bytes', disk_usage.free, curr_resource_id))
+            sample_list.append(make_sample(name+'_percent_used', sample.TYPE_GAUGE, 'bytes', disk_usage.percent, curr_resource_id))
 
         return sample_list
     
@@ -43,12 +43,12 @@ class diskIO (plugin.PhyServerPollster):
         name = _DISK_IO
         for disk in disk_io:
             if disk != 'loop0':
-                resource_id = resource_id + disk
-                sample_list.append(make_sample(name+'_read_count', sample.TYPE_CUMULATIVE, 'numbers', disk_io[disk].read_count, resource_id))
-                sample_list.append(make_sample(name+'_write_count', sample.TYPE_CUMULATIVE, 'numbers', disk_io[disk].write_count, resource_id))
-                sample_list.append(make_sample(name+'_read_bytes', sample.TYPE_CUMULATIVE, 'bytes', disk_io[disk].read_bytes, resource_id))
-                sample_list.append(make_sample(name+'_write_bytes', sample.TYPE_CUMULATIVE, 'bytes', disk_io[disk].write_bytes, resource_id))
-                sample_list.append(make_sample(name+'_read_time', sample.TYPE_CUMULATIVE, 'seconds', disk_io[disk].read_time, resource_id))
-                sample_list.append(make_sample(name+'_write_time', sample.TYPE_CUMULATIVE, 'seconds', disk_io[disk].write_time, resource_id))
+                curr_resource_id = resource_id + disk
+                sample_list.append(make_sample(name+'_read_count', sample.TYPE_CUMULATIVE, 'numbers', disk_io[disk].read_count, curr_resource_id))
+                sample_list.append(make_sample(name+'_write_count', sample.TYPE_CUMULATIVE, 'numbers', disk_io[disk].write_count, curr_resource_id))
+                sample_list.append(make_sample(name+'_read_bytes', sample.TYPE_CUMULATIVE, 'bytes', disk_io[disk].read_bytes, curr_resource_id))
+                sample_list.append(make_sample(name+'_write_bytes', sample.TYPE_CUMULATIVE, 'bytes', disk_io[disk].write_bytes, curr_resource_id))
+                sample_list.append(make_sample(name+'_read_time', sample.TYPE_CUMULATIVE, 'seconds', disk_io[disk].read_time, curr_resource_id))
+                sample_list.append(make_sample(name+'_write_time', sample.TYPE_CUMULATIVE, 'seconds', disk_io[disk].write_time, curr_resource_id))
                 
         return sample_list

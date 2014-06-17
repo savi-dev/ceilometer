@@ -100,13 +100,13 @@ class UDPCollectorService(CollectorBase, os_service.Service):
                 LOG.warn(_("UDP: Cannot decode data sent by %s"), str(source))
             else:
                 try:
-                    sample['counter_name'] = sample['name']
-                    sample['counter_volume'] = sample['volume']
-                    sample['counter_unit'] = sample['unit']
-                    sample['counter_type'] = sample['type']
+#                     sample['counter_name'] = sample['name']
+#                     sample['counter_volume'] = sample['volume']
+#                     sample['counter_unit'] = sample['unit']
+#                     sample['counter_type'] = sample['type']
                     LOG.debug("UDP: Storing %s", str(sample))
                     self.dispatcher_manager.map(
-                        lambda ext, data: ext.obj.record_metering_data(data),
+                        lambda ext, data: ext.obj.record_metering_data(None, data),
                         sample)
                 except Exception:
                     LOG.exception(_("UDP: Unable to store meter"))

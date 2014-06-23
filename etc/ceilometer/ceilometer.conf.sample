@@ -1,40 +1,40 @@
 
 [DEFAULT]
-os_auth_url = http://10.12.0.10:5000/v2.0
-os_region_name = EDGE-HD-1
+os_auth_url = http://iam.savitestbed.ca:5000/v2.0
+os_region_name = xxx
 os_tenant_name = service
-os_password = supersecret
+os_password = xxx
 os_username = ceilometer
 policy_file = /etc/ceilometer/policy.json
 verbose = True
 debug = True
 notification_topics = notifications
-rabbit_password = savi
-rabbit_host = localhost
+rabbit_password = xxx
+rabbit_host = xxx
 rpc_backend = ceilometer.openstack.common.rpc.impl_kombu
 
 [openflow]
-of_ctrl_host = 10.12.0.10
+of_ctrl_host = xxx
 of_ctrl_port = 8090
 ofi_driver = ryu
 
 [whale]
-whale_host = 10.12.0.10
+whale_host = xxx
 whale_port = 8976
 
 [physicalserver]
 enable_drivers = cpu_time,cpu_percent,cpu_time_percent,virtual_mem,swap_mem,disk_usage,disk_io,boot_time
 
 [keystone_authtoken]
-auth_host = 10.12.0.10
+auth_host = http://iam.savitestbed.ca
 auth_version = 2.0
 signing_dir = /var/cache/ceilometer
 admin_tenant_name = service
-admin_password = supersecret
+admin_password = xxx
 admin_user = ceilometer
 auth_protocol = http
 
 
 
 [database]
-connection = mysql://root:supersecret@127.0.0.1/ceilometer?charset=utf8
+connection = xxx

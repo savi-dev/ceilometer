@@ -29,15 +29,13 @@ CONF_OPTS = [
 cfg.CONF.register_opts(CONF_OPTS, group='email')
 
 
-
-
 class EmailAlarmNotifier(notifier.AlarmNotifier):
     """Email alarm notifier."""
 
     @staticmethod
     def notify(action, alarm_id, previous, current, reason):
        
-        LOG.debug("Notifying alarm %s from %s to %s with action %s because %s",
+        LOG.info("Notifying alarm %s from %s to %s with action %s because %s",
                  alarm_id, previous, current, action, reason)
         body = {'alarm_id': alarm_id, 'previous': previous,
                 'current': current, 'reason': reason}
@@ -76,4 +74,3 @@ class EmailAlarmNotifier(notifier.AlarmNotifier):
         else:
             LOG.error("Please provide at least one email address to send")
             return None
-

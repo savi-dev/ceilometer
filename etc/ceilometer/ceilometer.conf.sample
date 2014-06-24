@@ -26,7 +26,7 @@ whale_port = 8976
 enable_drivers = cpu_time,cpu_percent,cpu_time_percent,virtual_mem,swap_mem,disk_usage,disk_io,boot_time
 
 [keystone_authtoken]
-auth_host = http://iam.savitestbed.ca
+auth_host = iam.savitestbed.ca
 auth_version = 2.0
 signing_dir = /var/cache/ceilometer
 admin_tenant_name = service

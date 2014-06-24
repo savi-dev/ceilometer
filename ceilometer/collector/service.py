@@ -50,19 +50,11 @@ OPTS = [
                 default=False,
                 help='Save event details'),
     cfg.MultiStrOpt('dispatcher',
-                    default=['database', 'notify_whale'],
+                    default=['database'],
                     help='dispatcher to process metering data'),
 ]
 
 cfg.CONF.register_opts(OPTS, group="collector")
-
-CONF_OPTS = [
-    cfg.StrOpt('conf_rest_api',
-               default="http://" + socket.gethostbyname(socket.gethostname()) + ":8976",
-               help='address of the node that has whale running'),
-]
-
-cfg.CONF.register_opts(CONF_OPTS, group='whale')
 
 
 LOG = log.getLogger(__name__)

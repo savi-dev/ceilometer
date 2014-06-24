@@ -56,6 +56,7 @@ OPTS = [
 
 cfg.CONF.register_opts(OPTS, group="collector")
 
+
 LOG = log.getLogger(__name__)
 
 

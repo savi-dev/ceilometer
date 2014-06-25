@@ -383,6 +383,9 @@ class Connection(base.Connection):
         self.db.meter.ensure_index([('timestamp', pymongo.DESCENDING)],
                                    name='timestamp_idx')
 
+        self.db.meter.ensure_index([('counter_name', pymongo.ASCENDING)],
+                                   name='counter_name_idx')
+
         indexes = self.db.meter.index_information()
 
         ttl = cfg.CONF.database.time_to_live

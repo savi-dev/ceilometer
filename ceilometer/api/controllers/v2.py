@@ -694,7 +694,7 @@ class MeterController(rest.RestController):
         self._id = meter_id
 
     @wsme_pecan.wsexpose([Sample], [Query], int)
-    def get_all(self, q=[], limit=None):
+    def get_all(self, q=[], limit=100):
         """Return samples for the meter.
 
         :param q: Filter rules for the data to be returned.
@@ -879,6 +879,19 @@ class MetersController(rest.RestController):
         return [Meter.from_db_model(m)
                 for m in pecan.request.storage_conn.get_meters(**kwargs)]
 
+class MeterNameController(rest.RestController):
+    @wsme_pecan.wsexpose([Meter])
+    def get_all(self):
+        kwargs = {}
+        names = []
+        result = []
+        iter = pecan.request.storage_conn.get_meters(**kwargs)
+        for m in iter:
+            if m.name not in names:
+                names.append(m.name)
+                result.append(m)
+        return [Meter.from_db_model(m)
+                   for m in result]
 
 class Resource(_Base):
     """An externally defined object for which samples have been received.
@@ -1508,3 +1521,4 @@ class V2Controller(object):
     resources = ResourcesController()
     meters = MetersController()
     alarms = AlarmsController()
+    meternames = MeterNameController()

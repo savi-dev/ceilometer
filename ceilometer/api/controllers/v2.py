@@ -694,7 +694,7 @@ class MeterController(rest.RestController):
         self._id = meter_id
 
     @wsme_pecan.wsexpose([Sample], [Query], int)
-    def get_all(self, q=[], limit=100):
+    def get_all(self, q=[], limit=20):
         """Return samples for the meter.
 
         :param q: Filter rules for the data to be returned.

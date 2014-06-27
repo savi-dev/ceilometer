@@ -12,6 +12,7 @@ notification_topics = notifications
 rabbit_password = xxx
 rabbit_host = xxx
 rpc_backend = ceilometer.openstack.common.rpc.impl_kombu
+metering_secret = xxx
 
 [openflow]
 of_ctrl_host = xxx
@@ -34,8 +35,11 @@ admin_password = xxx
 admin_user = ceilometer
 auth_protocol = http
 
-
-
 [database]
 connection = xxx
 time_to_live = xxx
+
+[email]
+from_addr = xxx
+email_password = xxx
+

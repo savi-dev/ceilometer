@@ -38,3 +38,4 @@ auth_protocol = http
 
 [database]
 connection = xxx
+time_to_live = xxx

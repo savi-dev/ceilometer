@@ -27,7 +27,17 @@ from ceilometer.openstack.common import service as os_service
 from ceilometer.openstack.common.rpc import service as rpc_service
 from ceilometer import service
 
+import socket
+
 LOG = log.getLogger(__name__)
+
+CONF_OPTS = [
+    cfg.StrOpt('hypervisor_name',
+               default=socket.gethostname(),
+               help='the hypervisor name, used for monitoring nova instance'),
+]
+
+cfg.CONF.register_opts(CONF_OPTS)
 
 
 class PollingTask(agent.PollingTask):
@@ -53,7 +63,7 @@ class PollingTask(agent.PollingTask):
 
     def poll_and_publish(self):
         try:
-            instances = self.manager.nv.instance_get_all_by_host(cfg.CONF.host)
+            instances = self.manager.nv.instance_get_all_by_host(cfg.CONF.hypervisor_name)
         except Exception as err:
             LOG.exception('Unable to retrieve instances: %s', err)
         else:

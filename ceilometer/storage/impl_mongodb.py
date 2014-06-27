@@ -25,6 +25,7 @@ import copy
 import operator
 import uuid
 import weakref
+import re
 
 import bson.code
 import bson.objectid
@@ -383,8 +384,13 @@ class Connection(base.Connection):
         self.db.meter.ensure_index([('timestamp', pymongo.DESCENDING)],
                                    name='timestamp_idx')
 
-        self.db.meter.ensure_index([('counter_name', pymongo.ASCENDING)],
-                                   name='counter_name_idx')
+        self.db.meter.ensure_index([('counter_name', pymongo.ASCENDING), 
+                                    ('resource_id', pymongo.ASCENDING),
+                                    ('timestamp', pymongo.DESCENDING)],
+                                   name='counter_name_1_resource_id_1_timestamp_-1')
+        self.db.meter.ensure_index([('counter_name', pymongo.ASCENDING),
+                                    ('timestamp', pymongo.DESCENDING)],
+                                   name='counter_name_1_timestamp_-1')
 
         indexes = self.db.meter.index_information()
 
@@ -436,6 +442,16 @@ class Connection(base.Connection):
              },
             upsert=True,
         )
+        #TODO this is a special case for sahara image, need to try to take this out
+        if data['resource_metadata']:
+            if 'properties' in data['resource_metadata']:
+                properties = data['resource_metadata']['properties']
+                for f in properties:
+                   if re.match(r'.*\..*', f):
+                       value = properties[f]
+                       del data['resource_metadata']['properties'][f]
+                       name_nodot = f.replace(".", "")
+                       data['resource_metadata']['properties'][name_nodot] = value
 
         # Record the updated resource metadata
         self.db.resource.update(
@@ -453,10 +469,14 @@ class Connection(base.Connection):
              },
             upsert=True,
         )
-
         # Record the raw data for the meter. Use a copy so we do not
         # modify a data structure owned by our caller (the driver adds
         # a new key '_id').
+        
+        #TODO investigate why openflow error counter can sometimes be 0xFFFFFFFFFFFFFFFF
+        if data['counter_volume']==18446744073709551615:
+            data['counter_volume']=-1
+        
         record = copy.copy(data)
         self.db.meter.insert(record)
 
@@ -747,6 +767,7 @@ class Connection(base.Connection):
         if limit:
             samples = self.db.meter.find(
                 q, limit=limit, sort=[("timestamp", pymongo.DESCENDING)])
+            
         else:
             samples = self.db.meter.find(
                 q, sort=[("timestamp", pymongo.DESCENDING)])

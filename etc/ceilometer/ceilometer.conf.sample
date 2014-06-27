@@ -13,6 +13,7 @@ rabbit_password = xxx
 rabbit_host = xxx
 rpc_backend = ceilometer.openstack.common.rpc.impl_kombu
 metering_secret = xxx
+hypervisor_name = xxx
 
 [openflow]
 of_ctrl_host = xxx

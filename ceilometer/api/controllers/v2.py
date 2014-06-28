@@ -880,9 +880,9 @@ class MetersController(rest.RestController):
                 for m in pecan.request.storage_conn.get_meters(**kwargs)]
 
 class MeterNameController(rest.RestController):
-    @wsme_pecan.wsexpose([Meter])
-    def get_all(self):
-        kwargs = {}
+    @wsme_pecan.wsexpose([Meter], [Query])
+    def get_all(self, q=[]):
+        kwargs = _query_to_kwargs(q, pecan.request.storage_conn.get_meters)
         names = []
         result = []
         iter = pecan.request.storage_conn.get_meters(**kwargs)

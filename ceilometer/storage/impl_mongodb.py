@@ -453,6 +453,7 @@ class Connection(base.Connection):
                        name_nodot = f.replace(".", "")
                        data['resource_metadata']['properties'][name_nodot] = value
 
+ 
         # Record the updated resource metadata
         self.db.resource.update(
             {'_id': data['resource_id']},
@@ -679,42 +680,42 @@ class Connection(base.Connection):
         # but doing any better will require changing the database
         # schema and that will need more thought than I have time
         # to put into it today.
-        if start_timestamp or end_timestamp:
+        #if start_timestamp or end_timestamp:
             # Look for resources matching the above criteria and with
             # samples in the time range we care about, then change the
             # resource query to return just those resources by id.
-            ts_range = make_timestamp_range(start_timestamp, end_timestamp,
-                                            start_timestamp_op,
-                                            end_timestamp_op)
-            if ts_range:
-                q['timestamp'] = ts_range
+            #ts_range = make_timestamp_range(start_timestamp, end_timestamp,
+            #                                start_timestamp_op,
+            #                                end_timestamp_op)
+            #if ts_range:
+            #    q['timestamp'] = ts_range
 
-        sort_keys = base._handle_sort_key('resource')
-        sort_instructions = self._build_sort_instructions(sort_keys)[0]
+        #sort_keys = base._handle_sort_key('resource')
+        #sort_instructions = self._build_sort_instructions(sort_keys)[0]
 
         # use a unique collection name for the results collection,
         # as result post-sorting (as oppposed to reduce pre-sorting)
         # is not possible on an inline M-R
-        out = 'resource_list_%s' % uuid.uuid4()
-        self.db.meter.map_reduce(self.MAP_RESOURCES,
-                                 self.REDUCE_RESOURCES,
-                                 out=out,
-                                 sort={'resource_id': 1},
-                                 query=q)
+        # 
+        #out = 'resource_list_%s' % uuid.uuid4()
+        #self.db.meter.map_reduce(self.MAP_RESOURCES,
+        #                         self.REDUCE_RESOURCES,
+        #                         out=out,
+        #                         sort={'resource_id': 1},
+        #                         query=q)
 
-        try:
-            for r in self.db[out].find(sort=sort_instructions):
-                resource = r['value']
-                yield models.Resource(
-                    resource_id=r['_id'],
-                    user_id=resource['user_id'],
-                    project_id=resource['project_id'],
-                    first_sample_timestamp=resource['first_timestamp'],
-                    last_sample_timestamp=resource['last_timestamp'],
-                    source=resource['source'],
-                    metadata=resource['metadata'])
-        finally:
-            self.db[out].drop()
+        #try:
+        for r in self.db.resource.find(q):
+            yield models.Resource(
+                resource_id=r['_id'],
+                first_sample_timestamp=None,
+                last_sample_timestamp=None,
+                user_id=r['user_id'],
+                project_id=r['project_id'],
+                source=r['source'],
+                metadata=r['metadata'])
+        #finally:
+        #    self.db[out].drop()
 
     def get_meters(self, user=None, project=None, resource=None, source=None,
                    metaquery={}, pagination=None):
